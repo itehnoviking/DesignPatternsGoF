@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+#region Creational Patterns
 
 #region Abstract Factory
 
@@ -9,6 +10,9 @@ using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading.Channels;
 using AbstractFactory;
+using Adapter;
+using Bridge.Abstractions;
+using Bridge.Implementation;
 using Builder;
 using FactoryMethod;
 using FactoryMethod.Abstractions;
@@ -87,5 +91,36 @@ var instance1 = Singleton.Singleton.Instance();
 var instance2 = Singleton.Singleton.Instance();
 
 Console.WriteLine(ReferenceEquals(instance1, instance2));
+
+#endregion
+
+Console.WriteLine();
+
+#endregion
+
+Console.WriteLine();
+
+#region Structural Patterns
+
+#region Adapter
+
+Target target = new Adapter.Adapter();
+target.Request();
+
+#endregion
+
+Console.WriteLine();
+
+#region Bridge
+
+AbstractionBook abstractionBook;
+
+abstractionBook = new TechBook(new ConcreteTextClearCode());
+abstractionBook.Operation();
+
+abstractionBook = new TechBook(new ConcreteTextCodeComplete());
+abstractionBook.Operation();
+
+#endregion
 
 #endregion
