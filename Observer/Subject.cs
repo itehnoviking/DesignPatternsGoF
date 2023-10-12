@@ -8,6 +8,7 @@
     public abstract class Subject
     {
         protected Observer observers = null;
+
         public event Observer Event
         {
             add { observers += value; }

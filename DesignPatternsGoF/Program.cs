@@ -31,6 +31,9 @@ using Observer;
 using Prototype;
 using Proxy;
 using State;
+using Strategy;
+using TemplateMethod;
+using Visitor;
 using Component = Composite.Component;
 using Context = Interpreter.Context;
 using Product = Builder.Product;
@@ -318,9 +321,11 @@ Console.WriteLine();
 
 // Издатель.
 Subject subject = new ConcreteSubject();
+
 // Подписчик, с сообщенным лямбда выражением.
 Observer.Observer observer = new Observer.Observer(
     (observerState) => Console.WriteLine(observerState + " 1"));
+
 // Подписка на уведомление о событии.
 subject.Event += observer;
 subject.Event +=
@@ -328,17 +333,61 @@ subject.Event +=
 subject.State = "State ...";
 subject.Notify();
 Console.WriteLine(new string('-', 11));
+
 // Отписка от уведомлений.
 subject.Event -= observer;
 subject.Notify();
 
 #endregion
 
+Console.WriteLine();
+
 #region State
 
-State.Context contextState = new State.Context(new ConcreteStateA());
+State.Context contextState = new State.Context(new PenOpen());
 contextState.Request();
 contextState.Request();
+
+#endregion
+
+Console.WriteLine();
+
+#region Strategy
+
+Stopwatch stopwatch = Stopwatch.StartNew();
+
+var sort = new BubbleSort();
+var contextStrategy = new ContextStrategy(sort);
+
+contextStrategy.Sort();
+contextStrategy.PrintArray();
+
+stopwatch.Stop();
+Console.WriteLine(stopwatch.ElapsedTicks);
+
+#endregion
+
+
+#region TemplateMethod
+
+var flag1 = new PolandFlag();
+flag1.Draw();
+
+Console.WriteLine();
+
+var flag2 = new IndonesiaFlag();
+flag2.Draw();
+
+#endregion
+
+Console.WriteLine();
+
+#region Visitor
+
+Village village = new Village();
+village.Add(new BoysHouse());
+village.Add(new GirlsHouse());
+village.Accept(new Santa());
 
 #endregion
 
